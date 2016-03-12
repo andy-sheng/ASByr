@@ -1,0 +1,6 @@
+framework module ASByr {
+  umbrella header "ASByr-umbrella.h"
+
+  export *
+  module * { export * }
+}
