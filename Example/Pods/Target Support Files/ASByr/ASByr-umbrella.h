@@ -10,6 +10,7 @@
 #import "ASByrFav.h"
 #import "ASByrMail.h"
 #import "ASByrRefer.h"
+#import "ASByrResponse.h"
 #import "ASByrSearch.h"
 #import "ASByrToken.h"
 #import "ASByrUser.h"

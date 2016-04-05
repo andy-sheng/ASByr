@@ -1,15 +1,15 @@
 {
   "name": "ASByr",
   "version": "0.1.0",
-  "summary": "A short description of ASByr.",
-  "description": "",
-  "homepage": "https://github.com/<GITHUB_USERNAME>/ASByr",
+  "summary": "A library for http://bbs.byr.cn .",
+  "description": "A simple iOS SDK for byr bbs api.",
+  "homepage": "https://github.com/andy-sheng/ASByr",
   "license": "MIT",
   "authors": {
     "andysheng": "andysheng@live.com"
   },
   "source": {
-    "git": "https://github.com/<GITHUB_USERNAME>/ASByr.git",
+    "git": "https://github.com/andy-sheng/ASByr.git",
     "tag": "0.1.0"
   },
   "platforms": {

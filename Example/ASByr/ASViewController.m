@@ -20,7 +20,7 @@
 #import "ASByrVote.h"
 #import "ASByrWidget.h"
 
-@interface ASViewController ()
+@interface ASViewController ()<ASByrWidgetResponseDelegate>
 
 @end
 
@@ -194,21 +194,18 @@
     //    }];
     
     ASByrWidget *byrWidget = [[ASByrWidget alloc] initWithAccessToken:@"69cd12db569c410e97eb32d60514d6c5"];
-    //    [byrWidget fetchTop10WithSuccessBlock:^(id result) {
-    //       NSLog(@"%@", result);
-    //    } failureBlock:^(id result) {
-    //        NSLog(@"%@", result);
-    //    }];
+    byrWidget.responseDelegate = self;
+    [byrWidget fetchTop10];
     //    [byrWidget fetchRecommendWithSuccessBlock:^(id result) {
     //       NSLog(@"%@", result);
     //    } failureBlock:^(id result) {
     //        NSLog(@"%@", result);
     //    }];
-    [byrWidget fetchSectionTopWithSectionNo:3 successBlock:^(id result) {
-        NSLog(@"%@", result);
-    } failureBlock:^(id result) {
-        NSLog(@"%@", result);
-    }];
+//    [byrWidget fetchSectionTopWithSectionNo:3 successBlock:^(id result) {
+//        NSLog(@"%@", result);
+//    } failureBlock:^(id result) {
+//        NSLog(@"%@", result);
+//    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -217,4 +214,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (void)fetchTop10Response:(ASByrResponse *)response {
+    NSLog(@"%ld", response.statusCode);
+    NSLog(@"%@", response.response);
+}
 @end

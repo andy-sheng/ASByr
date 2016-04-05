@@ -27,6 +27,7 @@
 }
 
 
+
 - (void)sendRequestWithUrl:(NSString *)urlStr
                     method:(NSString *)method
                     parameters:(id) parameters
@@ -40,16 +41,22 @@
     if ([method  isEqual: HTTP_GET]) {
         
         [manager GET:[NSString stringWithFormat:@"%@%@", urlStr, RETURN_FORMAT] parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            successCallback(responseObject);
+            NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
+            successCallback(response.statusCode, responseObject);
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            failureCallback(error);
+            NSDictionary *json  = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:kNilOptions  error:nil];
+            NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
+            failureCallback(response.statusCode, json);
         }];
     } else {
         
         [manager POST:[NSString stringWithFormat:@"%@%@", urlStr, RETURN_FORMAT] parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            successCallback(responseObject);
+            NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
+            successCallback(response.statusCode, responseObject);
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            failureCallback(error);
+            NSDictionary *json  = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:kNilOptions  error:nil];
+            NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
+            failureCallback(response.statusCode, json);
         }];
     }
     

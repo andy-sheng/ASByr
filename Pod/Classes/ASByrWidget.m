@@ -16,14 +16,54 @@
     return self;
 }
 
+- (void)fetchTop10WithReformer:(id<ASByrWidgetResponseReformer>)reformer {
+    void (^callback)(NSInteger, id) = ^(NSInteger statusCode, id response) {
+        ASByrResponse *byrResponse = [[ASByrResponse alloc] init];
+        byrResponse.statusCode = statusCode;
+        byrResponse.response   = response;
+        if (reformer) {
+            byrResponse = [reformer reformTop10Response:byrResponse];
+        }
+        [self.responseDelegate fetchTop10Response:byrResponse];
+    };
+    [self fetchTop10WithSuccessBlock:callback failureBlock:callback];
+}
+
 - (void)fetchTop10WithSuccessBlock:(ASSuccessCallback)success
                       failureBlock:(ASSuccessCallback)failure {
     [self sendRequestWithUrl:[NSString stringWithFormat:@"%@/topten", BYR_WIDGET_URL] method:HTTP_GET parameters:nil success:success failure:failure];
 }
 
+- (void)fetchRecommendWithReformer:(id<ASByrWidgetResponseReformer>)reformer {
+    void (^callback)(NSInteger, id) = ^(NSInteger statusCode, id response) {
+        ASByrResponse *byrResponse = [[ASByrResponse alloc] init];
+        byrResponse.statusCode = statusCode;
+        byrResponse.response   = response;
+        if (reformer) {
+            byrResponse = [reformer reformRecommendResponse:byrResponse];
+        }
+        [self.responseDelegate fetchRecommendResponse:byrResponse];
+    };
+    [self fetchRecommendWithSuccessBlock:callback failureBlock:callback];
+}
+
 - (void)fetchRecommendWithSuccessBlock:(ASSuccessCallback)success
                           failureBlock:(ASSuccessCallback)failure {
    [self sendRequestWithUrl:[NSString stringWithFormat:@"%@/recommend", BYR_WIDGET_URL] method:HTTP_GET parameters:nil success:success failure:failure];
+}
+
+- (void)fetchSectionTopWithSectionNo:(NSInteger)section
+                            reformer:(id<ASByrWidgetResponseReformer>)reformer{
+    void (^callback)(NSInteger, id) = ^(NSInteger statusCode, id response) {
+        ASByrResponse *byrResponse = [[ASByrResponse alloc] init];
+        byrResponse.statusCode = statusCode;
+        byrResponse.response   = response;
+        if (reformer) {
+            byrResponse = [reformer reformSectionTopResponse:byrResponse];
+        }
+        [self.responseDelegate fetchSectionTopResponse:byrResponse];
+    };
+    [self fetchSectionTopWithSectionNo:section successBlock:callback failureBlock:callback];
 }
 
 - (void)fetchSectionTopWithSectionNo:(NSInteger)section

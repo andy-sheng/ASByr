@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A80282DA2806B0DECA2F10FC"
+               BlueprintIdentifier = "066B9BFB4FD10427E055D0CB"
                BuildableName = "ASByr.framework"
                BlueprintName = "ASByr"
                ReferencedContainer = "container:Pods.xcodeproj">
