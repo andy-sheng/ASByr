@@ -13,6 +13,9 @@
 
 - (instancetype)initWithAccessToken:(NSString *)token {
     self = [super initWithAccessToken:token];
+    if (self) {
+        
+    }
     return self;
 }
 
@@ -20,13 +23,10 @@
     switch (box) {
         case ASByrMailOutbox:
             return @"outbox";
-            break;
         case ASByrMailDeleted:
             return @"deleted";
-            break;
         default:
             return @"inbox";
-            break;
     }
 }
 

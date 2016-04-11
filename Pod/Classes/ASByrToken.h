@@ -8,16 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
+#define ACCESS_TOKEN  @"access_token"
+#define REFRESH_TOKEN @"refresh_token"
+#define EXPIRES_IN    @"expires_in"
+
 @interface ASByrToken : NSObject
 
 @property(strong, nonatomic) NSString *accessToken;
 @property(strong, nonatomic) NSString *refreshToken;
 @property(assign, nonatomic) NSInteger expiresIn;
 
-- (ASByrToken *)initWithAccesssToken:(NSString *)accessToken
+- (instancetype)initWithAccesssToken:(NSString *)accessToken
                         refreshToken:(NSString*)refreshToken
                            expiresIn:(NSInteger) expiresIn;
 
-- (ASByrToken *)initWithAccesssToken:(NSString *)accessToken;
+- (instancetype)initWithAccesssToken:(NSString *)accessToken;
+
+- (instancetype)initFromStorage;
+
+- (void)saveToken;
+
+- (BOOL)valid;
 
 @end

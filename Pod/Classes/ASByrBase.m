@@ -21,12 +21,19 @@
 
 - (instancetype)initWithAccessToken:(NSString*)accessToken {
     self = [super init];
-    self.byrToken = [[ASByrToken alloc] initWithAccesssToken:accessToken];
-    
+    if (self) {
+        self.byrToken = [[ASByrToken alloc] initWithAccesssToken:accessToken ? accessToken : @""];
+    }
     return self;
 }
 
-
+- (instancetype)initWithASByrToken:(ASByrToken*)token {
+    self = [super init];
+    if (self) {
+        self.byrToken = token;
+    }
+    return self;
+}
 
 - (void)sendRequestWithUrl:(NSString *)urlStr
                     method:(NSString *)method

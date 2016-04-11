@@ -10,6 +10,8 @@
 
 @interface ASByrResponse : NSObject
 
+@property(nonatomic, assign) BOOL isSucceeded;
+
 @property(nonatomic, assign) NSInteger statusCode;
 
 @property(nonatomic, strong) id response;

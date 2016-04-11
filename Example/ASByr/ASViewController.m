@@ -194,8 +194,8 @@
     //    }];
     
     ASByrWidget *byrWidget = [[ASByrWidget alloc] initWithAccessToken:@"69cd12db569c410e97eb32d60514d6c5"];
-    byrWidget.responseDelegate = self;
-    [byrWidget fetchTop10];
+//    byrWidget.responseDelegate = self;
+//    [byrWidget fetchTop10];
     //    [byrWidget fetchRecommendWithSuccessBlock:^(id result) {
     //       NSLog(@"%@", result);
     //    } failureBlock:^(id result) {
