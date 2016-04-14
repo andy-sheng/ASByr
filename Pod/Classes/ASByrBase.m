@@ -12,7 +12,7 @@
 
 @interface ASByrBase()
 
-@property(strong, nonatomic) ASByrToken *byrToken;
+@property(strong, nonatomic) NSString *accessToken;
 
 @end
 
@@ -22,18 +22,12 @@
 - (instancetype)initWithAccessToken:(NSString*)accessToken {
     self = [super init];
     if (self) {
-        self.byrToken = [[ASByrToken alloc] initWithAccesssToken:accessToken ? accessToken : @""];
+        self.accessToken = accessToken ? accessToken : @"";
     }
     return self;
 }
 
-- (instancetype)initWithASByrToken:(ASByrToken*)token {
-    self = [super init];
-    if (self) {
-        self.byrToken = token;
-    }
-    return self;
-}
+
 
 - (void)sendRequestWithUrl:(NSString *)urlStr
                     method:(NSString *)method
@@ -42,7 +36,7 @@
                    failure:(ASFailureCallback)failureCallback{
     
     NSMutableDictionary *params = parameters ? [NSMutableDictionary dictionaryWithDictionary:parameters] : [NSMutableDictionary dictionary];
-    [params setObject:self.byrToken.accessToken forKey:@"oauth_token"];
+    [params setObject:self.accessToken forKey:@"oauth_token"];
     
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BYR_BASE_URL]];
     if ([method  isEqual: HTTP_GET]) {

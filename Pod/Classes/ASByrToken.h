@@ -18,15 +18,21 @@
 @property(strong, nonatomic) NSString *refreshToken;
 @property(assign, nonatomic) NSInteger expiresIn;
 
-- (instancetype)initWithAccesssToken:(NSString *)accessToken
-                        refreshToken:(NSString*)refreshToken
-                           expiresIn:(NSInteger) expiresIn;
++ (instancetype)shareInstance;
 
-- (instancetype)initWithAccesssToken:(NSString *)accessToken;
+- (void)setupWithAccesssToken:(NSString *)accessToken
+                 refreshToken:(NSString*)refreshToken
+                    expiresIn:(NSInteger)expiresIn;
 
-- (instancetype)initFromStorage;
-
-- (void)saveToken;
+//- (instancetype)initWithAccesssToken:(NSString *)accessToken
+//                        refreshToken:(NSString*)refreshToken
+//                           expiresIn:(NSInteger) expiresIn;
+//
+//- (instancetype)initWithAccesssToken:(NSString *)accessToken;
+//
+//- (instancetype)initFromStorage;
+//
+//- (void)saveToken;
 
 - (BOOL)valid;
 

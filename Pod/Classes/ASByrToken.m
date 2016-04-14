@@ -16,21 +16,49 @@
 
 @implementation ASByrToken
 
+static id _instance;
 
-- (instancetype)initWithAccesssToken:(NSString *)accessToken {
-    return [self initWithAccesssToken:accessToken refreshToken:nil expiresIn:0];
+
++ (instancetype)allocWithZone:(struct _NSZone *)zone {
+    if (_instance == nil) {
+        @synchronized (self) {
+            if (_instance == nil) {
+                _instance = [super allocWithZone:zone];
+            }
+        }
+    }
+    return _instance;
 }
 
-- (instancetype)initWithAccesssToken:(NSString *)accessToken
-                        refreshToken:(NSString*)refreshToken
-                           expiresIn:(NSInteger)expiresIn {
-    self = [super init];
-    self.accessToken = accessToken;
-    self.refreshToken = refreshToken;
-    self.expiresIn = expiresIn;
-    
-    return self;
++ (instancetype)shareInstance {
+    if (_instance == nil) {
+        @synchronized (self) {
+            if (_instance == nil) {
+                _instance = [[self alloc] initFromStorage];
+            }
+        }
+    }
+    return _instance;
 }
+
+- (id)copyWithZone:(NSZone *)zone{
+    return _instance;
+}
+
+//- (instancetype)initWithAccesssToken:(NSString *)accessToken {
+//    return [self initWithAccesssToken:accessToken refreshToken:nil expiresIn:0];
+//}
+//
+//- (instancetype)initWithAccesssToken:(NSString *)accessToken
+//                        refreshToken:(NSString*)refreshToken
+//                           expiresIn:(NSInteger)expiresIn {
+//    self = [super init];
+//    self.accessToken = accessToken;
+//    self.refreshToken = refreshToken;
+//    self.expiresIn = expiresIn;
+//    
+//    return self;
+//}
 
 - (instancetype)initFromStorage {
     self = [super init];
@@ -42,11 +70,22 @@
     return self;
 }
 
-- (void)saveToken {
+- (void)setupWithAccesssToken:(NSString *)accessToken
+                 refreshToken:(NSString*)refreshToken
+                    expiresIn:(NSInteger)expiresIn {
+    self.accessToken = accessToken;
+    self.refreshToken = refreshToken;
+    self.expiresIn = expiresIn;
     [[NSUserDefaults standardUserDefaults] setObject:self.accessToken forKey:ACCESS_TOKEN];
     [[NSUserDefaults standardUserDefaults] setInteger:self.expiresIn forKey:EXPIRES_IN];
     [[NSUserDefaults standardUserDefaults] setObject:self.refreshToken forKey:REFRESH_TOKEN];
 }
+
+//- (void)saveToken {
+//    [[NSUserDefaults standardUserDefaults] setObject:self.accessToken forKey:ACCESS_TOKEN];
+//    [[NSUserDefaults standardUserDefaults] setInteger:self.expiresIn forKey:EXPIRES_IN];
+//    [[NSUserDefaults standardUserDefaults] setObject:self.refreshToken forKey:REFRESH_TOKEN];
+//}
 
 - (BOOL)valid {
     if (self.accessToken) {

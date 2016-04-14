@@ -12,6 +12,7 @@
 #define STATE @"35f7879b051b0bcb77a015977f5aeeeb"
 #define URL_TEMPLATE @"http://bbs.byr.cn/oauth2/authorize?response_type=%@&client_id=%@&redirect_uri=%@&state=%@"
 
+
 @interface ASByrOAth2()
 
 @property (nonatomic, strong) NSRegularExpression *accessTokenReg;
@@ -23,6 +24,8 @@
 @property (nonatomic, strong) NSRegularExpression *stateReg;
 
 @end
+
+
 
 @implementation ASByrOAth2
 
@@ -44,35 +47,35 @@
     return self;
 }
 
-- (ASByrToken*)parseRedirectUri:(NSString *)url {
+- (BOOL)parseRedirectUri:(NSString *)url {
     
     NSArray *matches = [self.accessTokenReg matchesInString:url options:0 range:NSMakeRange(0, [url length])];
     if (![matches count]) {
-        return nil;
+        return NO;
     }
     NSString * accessToken = [url substringWithRange:((NSTextCheckingResult*)matches[0]).range];
     
     matches = [self.expiresInReg matchesInString:url options:0 range:NSMakeRange(0, [url length])];
     if (![matches count]) {
-        return nil;
+        return NO;
     }
     NSInteger expiresIn = [[url substringWithRange:((NSTextCheckingResult*)matches[0]).range] integerValue];
     
     matches = [self.refreshTokenReg matchesInString:url options:0 range:NSMakeRange(0, [url length])];
     if (![matches count]) {
-        return nil;
+        return NO;
     }
     NSString * refreshToken = [url substringWithRange:((NSTextCheckingResult*)matches[0]).range];
     
     matches = [self.stateReg matchesInString:url options:0 range:NSMakeRange(0, [url length])];
     if (![matches count]) {
-        return nil;
+        return NO;
     }
     
-    ASByrToken *token = [[ASByrToken alloc] initWithAccesssToken:accessToken
-                                                    refreshToken:refreshToken
-                                                       expiresIn:expiresIn];
-    return token;
+    [[ASByrToken shareInstance] setupWithAccesssToken:accessToken
+                                         refreshToken:refreshToken
+                                            expiresIn:expiresIn];
+    return YES;
 }
 
 @end
