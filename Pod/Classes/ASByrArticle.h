@@ -7,8 +7,32 @@
 //
 
 #import "ASByrBase.h"
+#import "ASByrResponse.h"
+
+@protocol ASByrArticleResponseDelegate <NSObject>
+
+@optional
+
+- (void)fetchThreadsResponse:(ASByrResponse*) response;
+
+
+
+@end
+
+@protocol ASByrArticleResponseReformer <NSObject>
+
+@optional
+
+- (ASByrResponse*)reformThreadsResponse:(ASByrResponse*) response;
+
+@end
+
 
 @interface ASByrArticle : ASByrBase
+
+@property(nonatomic, weak)id<ASByrArticleResponseDelegate> responseDelegate;
+
+@property(nonatomic, weak)id<ASByrArticleResponseReformer> responseReformer;
 
 - (ASByrArticle *)initWithAccessToken:(NSString *)token;
 
@@ -23,18 +47,37 @@
                  successBlock:(ASSuccessCallback)success
                  failureBlock:(ASSuccessCallback)failure;
 
-- (void)fetchThreadWithBoard:(NSString *)board
-                         aid:(NSInteger)aid
-                successBlock:(ASSuccessCallback)success
-                failureBlock:(ASFailureCallback)failure;
+/**
+ *
+ *
+ *  @param board
+ *  @param aid   
+ */
+- (void)fetchThreadsWithBoard:(NSString *)board
+                          aid:(NSInteger)aid;
 
-- (void)fetchThreadWithBoard:(NSString *)board
-                         aid:(NSInteger)aid
-                        page:(NSInteger)page
-                successBlock:(ASSuccessCallback)success
-                failureBlock:(ASFailureCallback)failure;
+- (void)fetchThreadsWithBoard:(NSString *)board
+                          aid:(NSInteger)aid
+                 successBlock:(ASSuccessCallback)success
+                 failureBlock:(ASFailureCallback)failure;
 
-- (void)fetchThreadWithBoard:(NSString *)board
+- (void)fetchThreadsWithBoard:(NSString *)board
+                          aid:(NSInteger)aid
+                         page:(NSInteger)page;
+
+- (void)fetchThreadsWithBoard:(NSString *)board
+                          aid:(NSInteger)aid
+                         page:(NSInteger)page
+                 successBlock:(ASSuccessCallback)success
+                 failureBlock:(ASFailureCallback)failure;
+
+- (void)fetchThreadsWithBoard:(NSString *)board
+                          aid:(NSInteger)aid
+                           au:(NSString *)au
+                        count:(NSInteger)count
+                         page:(NSInteger)page;
+              
+- (void)fetchThreadsWithBoard:(NSString *)board
                          aid:(NSInteger)aid
                           au:(NSString *)au
                        count:(NSInteger)count
@@ -43,13 +86,13 @@
                 failureBlock:(ASFailureCallback)failure;
 
 - (void)postArticleWithBoard:(NSString *)board
-                      title:(NSString *)title
+                       title:(NSString *)title
                      content:(NSString *)content
                 successBlock:(ASSuccessCallback)success
                 failureBlock:(ASFailureCallback)failure;
 
 - (void)postArticleWithBoard:(NSString *)board
-                      title:(NSString *)title
+                       title:(NSString *)title
                     content:(NSString *)content
                         reid:(NSInteger)reid
                 successBlock:(ASSuccessCallback)success

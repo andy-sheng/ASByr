@@ -28,4 +28,11 @@ typedef void (^ASFailureCallback)(NSInteger statusCode, id response);
                    success:(ASSuccessCallback) successCallback
                    failure:(ASFailureCallback) failureCallback;
 
+- (void)sendRequestWithUrl:(NSString *)urlStr
+                    method:(NSString *)method
+                parameters:(id) parameters
+                  delegate:(id) delegate
+                  callback:(SEL) callback
+                  reformer:(id) reformer
+                reformFunc:(SEL) reformFunc;
 @end

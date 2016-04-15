@@ -13,8 +13,15 @@
 
 - (ASByrArticle *)initWithAccessToken:(NSString *)token {
     self = [super initWithAccessToken:token];
+    if (self) {
+        self.responseDelegate = nil;
+        self.responseReformer = nil;
+    }
     return self;
 }
+
+
+#pragma mark fetch article with block
 
 - (void)fetchArticleWithBoard:(NSString *)board
                           aid:(NSInteger)aid
@@ -37,24 +44,61 @@
     [self sendRequestWithUrl:[NSString stringWithFormat:@"%@/%@/%ld", BYR_ARTICLE_URL, board, aid] method:HTTP_GET parameters:paramters success:success failure:failure];
 }
 
-- (void)fetchThreadWithBoard:(NSString *)board
-                         aid:(NSInteger)aid
-                successBlock:(ASSuccessCallback)success
-                failureBlock:(ASFailureCallback)failure {
-    [self fetchThreadWithBoard:board aid:aid au:nil count:10 page:1 successBlock:success failureBlock:failure];
+
+#pragma mark fetch threads with delegate
+
+- (void)fetchThreadsWithBoard:(NSString *)board
+                          aid:(NSInteger)aid {
+   [self fetchThreadsWithBoard:board aid:aid au:nil count:10 page:1];
+}
+
+- (void)fetchThreadsWithBoard:(NSString *)board
+                          aid:(NSInteger)aid
+                         page:(NSInteger)page {
+    [self fetchThreadsWithBoard:board aid:aid au:nil count:10 page:page];
+}
+
+- (void)fetchThreadsWithBoard:(NSString *)board
+                          aid:(NSInteger)aid
+                           au:(NSString *)au
+                        count:(NSInteger)count
+                         page:(NSInteger)page {
+    NSMutableDictionary *paramters = [NSMutableDictionary dictionary];
+    if (au) {
+        [paramters setObject:au forKey:@"au"];
+    }
+    [paramters setObject:count?[@(count) stringValue]:@"10" forKey:@"count"];
+    [paramters setObject:page?[@(page) stringValue]:@"1" forKey:@"page"];
+    [self sendRequestWithUrl:[NSString stringWithFormat:@"%@/%@/%ld", BYR_THREADS_URL, board, aid]
+                      method:HTTP_GET
+                  parameters:paramters
+                    delegate:self.responseDelegate
+                    callback:@selector(fetchThreadsResponse:)
+                    reformer:self.responseReformer
+                  reformFunc:@selector(reformThreadsResponse:)];
     
 }
 
-- (void)fetchThreadWithBoard:(NSString *)board
-                         aid:(NSInteger)aid
-                        page:(NSInteger)page
-                successBlock:(ASSuccessCallback)success
-                failureBlock:(ASFailureCallback)failure {
-    [self fetchThreadWithBoard:board aid:aid au:nil count:10 page:page successBlock:success failureBlock:failure];
+#pragma mark fetch threads with block
+
+- (void)fetchThreadsWithBoard:(NSString *)board
+                          aid:(NSInteger)aid
+                 successBlock:(ASSuccessCallback)success
+                 failureBlock:(ASFailureCallback)failure {
+    [self fetchThreadsWithBoard:board aid:aid au:nil count:10 page:1 successBlock:success failureBlock:failure];
     
 }
 
-- (void)fetchThreadWithBoard:(NSString *)board
+- (void)fetchThreadsWithBoard:(NSString *)board
+                          aid:(NSInteger)aid
+                         page:(NSInteger)page
+                 successBlock:(ASSuccessCallback)success
+                 failureBlock:(ASFailureCallback)failure {
+    [self fetchThreadsWithBoard:board aid:aid au:nil count:10 page:page successBlock:success failureBlock:failure];
+    
+}
+
+- (void)fetchThreadsWithBoard:(NSString *)board
                          aid:(NSInteger)aid
                           au:(NSString *)au
                        count:(NSInteger)count
