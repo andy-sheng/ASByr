@@ -78,4 +78,8 @@
     return YES;
 }
 
+- (BOOL)test:(NSString *)url {
+    NSLog(@"%@", url);
+    return YES;
+}
 @end

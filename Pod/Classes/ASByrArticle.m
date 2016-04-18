@@ -20,8 +20,31 @@
     return self;
 }
 
+#pragma mark - fetch article with delegate
 
-#pragma mark fetch article with block
+- (void)fetchArticleWithBoard:(NSString *)board
+                          aid:(NSInteger)aid {
+    [self fetchArticleWithBoard:board aid:aid mode:nil];
+}
+
+- (void)fetchArticleWithBoard:(NSString *)board
+                          aid:(NSInteger)aid
+                         mode:(NSString *)mode {
+    NSMutableDictionary *paramters = [NSMutableDictionary dictionary];
+    if (mode) {
+        [paramters setObject:mode forKey:@"mode"];
+    }
+    [self sendRequestWithUrl:[NSString stringWithFormat:@"%@/%@/%ld", BYR_ARTICLE_URL, board, aid]
+                      method:HTTP_GET
+                  parameters:paramters
+                    delegate:self.responseDelegate
+                    callback:@selector(fetchAriticleResponse:)
+                    reformer:self.responseReformer
+                  reformFunc:@selector(reformArticleResponse:)];
+}
+
+
+#pragma mark - fetch article with block
 
 - (void)fetchArticleWithBoard:(NSString *)board
                           aid:(NSInteger)aid
@@ -41,11 +64,15 @@
     if (mode) {
         [paramters setObject:mode forKey:@"mode"];
     }
-    [self sendRequestWithUrl:[NSString stringWithFormat:@"%@/%@/%ld", BYR_ARTICLE_URL, board, aid] method:HTTP_GET parameters:paramters success:success failure:failure];
+    [self sendRequestWithUrl:[NSString stringWithFormat:@"%@/%@/%ld", BYR_ARTICLE_URL, board, aid]
+                      method:HTTP_GET
+                  parameters:paramters
+                     success:success
+                     failure:failure];
 }
 
 
-#pragma mark fetch threads with delegate
+#pragma mark - fetch threads with delegate
 
 - (void)fetchThreadsWithBoard:(NSString *)board
                           aid:(NSInteger)aid {
@@ -79,7 +106,7 @@
     
 }
 
-#pragma mark fetch threads with block
+#pragma mark - fetch threads with block
 
 - (void)fetchThreadsWithBoard:(NSString *)board
                           aid:(NSInteger)aid

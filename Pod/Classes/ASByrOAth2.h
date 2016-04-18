@@ -20,6 +20,8 @@
 
 //- (NSDictionary*)parseRedirectUri:(NSString*)url;
 
-- (ASByrToken*)parseRedirectUri:(NSString*)url;
+- (BOOL)parseRedirectUri:(NSString*)url;
+
+- (BOOL)test:(NSString*)url;
 
 @end

@@ -13,6 +13,8 @@
 
 @optional
 
+- (void)fetchAriticleResponse:(ASByrResponse*) response;
+
 - (void)fetchThreadsResponse:(ASByrResponse*) response;
 
 
@@ -22,6 +24,8 @@
 @protocol ASByrArticleResponseReformer <NSObject>
 
 @optional
+
+- (ASByrResponse*)reformArticleResponse:(ASByrResponse*) response;
 
 - (ASByrResponse*)reformThreadsResponse:(ASByrResponse*) response;
 
@@ -36,16 +40,21 @@
 
 - (ASByrArticle *)initWithAccessToken:(NSString *)token;
 
+
+/**
+ *
+ *
+ *  @param board
+ *  @param aid
+ *  @param success
+ *  @param failure
+ */
 - (void)fetchArticleWithBoard:(NSString *)board
-                          aid:(NSInteger)aid
-                 successBlock:(ASSuccessCallback)success
-                 failureBlock:(ASSuccessCallback)failure;
+                          aid:(NSInteger)aid;
 
 - (void)fetchArticleWithBoard:(NSString *)board
                           aid:(NSInteger)aid
-                         mode:(NSString *)mode
-                 successBlock:(ASSuccessCallback)success
-                 failureBlock:(ASSuccessCallback)failure;
+                         mode:(NSString *)mode;
 
 /**
  *
