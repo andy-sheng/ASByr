@@ -16,6 +16,21 @@
     return self;
 }
 
+- (void)fetchBoardWithReformer:(id<ASByrBoardResponseReformer>)reformer boardName:(NSString *)name{
+    void (^callback)(NSInteger, id) = ^(NSInteger statusCode, id response) {
+        ASByrResponse *byrResponse = [[ASByrResponse alloc] init];
+        byrResponse.statusCode = statusCode;
+        byrResponse.response   = response;
+        if (reformer) {
+            byrResponse = [reformer reformBoardResponse:byrResponse];
+        }
+        [self.responseDelegate fetchBoardResponse:byrResponse];
+    };
+    [self fetchBoardDetailInfoWithName:name successBlock:callback failureBlock:^(NSInteger statusCode, id response) {
+        NSLog(@"fetch board info fail!");
+    }];
+}
+
 - (void)fetchSectionInfoWithName:(NSString *)name
                     successBlock:(ASSuccessCallback)success
                     failureBlock:(ASSuccessCallback)failure {
@@ -29,17 +44,17 @@
     [self sendRequestWithUrl:BYR_SECTION_URL method:HTTP_GET parameters:nil success:success failure:failure];
 }
 
-- (void)fetchBoardInfoWithName:(NSString *)name
-                  successBlock:(ASSuccessCallback)success
-                  failureBlock:(ASSuccessCallback)failure {
-    [self fetchBoardInfoWithName:name mode:0 count:30 page:1 successBlock:success failureBlock:failure];
+- (void)fetchBoardDetailInfoWithName:(NSString *)name
+                        successBlock:(ASSuccessCallback)success
+                        failureBlock:(ASSuccessCallback)failure {
+    [self fetchBoardInfoWithName:name mode:2 count:30 page:1 successBlock:success failureBlock:failure];
 }
 
-- (void)fetchBoardInfoWithName:(NSString *)name
-                          page:(NSInteger)page
-                  successBlock:(ASSuccessCallback)success
-                  failureBlock:(ASSuccessCallback)failure {
-    [self fetchBoardInfoWithName:name page:page successBlock:success failureBlock:failure];
+- (void)fetchBoardMainInfoWithName:(NSString *)name
+                              page:(NSInteger)page
+                      successBlock:(ASSuccessCallback)success
+                      failureBlock:(ASSuccessCallback)failure {
+    [self fetchBoardMainInfoWithName:name page:page successBlock:success failureBlock:failure];
 }
 
 - (void)fetchBoardInfoWithName:(NSString *)name
@@ -61,4 +76,6 @@
     
     [self sendRequestWithUrl:[NSString stringWithFormat:@"%@/%@", BYR_BOARD_URL, name] method:HTTP_GET parameters:parameters success:success failure:failure];
 }
+
+
 @end
