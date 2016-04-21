@@ -50,7 +50,7 @@
     [self fetchBoardInfoWithName:name mode:2 count:30 page:1 successBlock:success failureBlock:failure];
 }
 
-- (void)fetchBoardMainInfoWithName:(NSString *)name
+- (void)fetchBoardOtherInfoWithName:(NSString *)name
                               page:(NSInteger)page
                       successBlock:(ASSuccessCallback)success
                       failureBlock:(ASSuccessCallback)failure {
