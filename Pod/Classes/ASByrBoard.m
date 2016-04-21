@@ -54,7 +54,7 @@
                               page:(NSInteger)page
                       successBlock:(ASSuccessCallback)success
                       failureBlock:(ASSuccessCallback)failure {
-    [self fetchBoardMainInfoWithName:name page:page successBlock:success failureBlock:failure];
+    [self fetchBoardOtherInfoWithName:name page:page successBlock:success failureBlock:failure];
 }
 
 - (void)fetchBoardInfoWithName:(NSString *)name
