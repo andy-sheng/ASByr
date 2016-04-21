@@ -8,6 +8,22 @@
 
 #import "ASByrBase.h"
 
+@protocol ASByrBoardResponseDelegate <NSObject>
+
+@optional
+
+- (void)fetchBoardResponse:(ASByrResponse*) response;
+
+@end
+
+@protocol ASByrBoardResponseReformer <NSObject>
+
+@optional
+
+- (ASByrResponse*)reformBoardResponse:(ASByrResponse*) response;
+
+@end
+
 @interface ASByrBoard : ASByrBase
 
 /**
@@ -17,7 +33,12 @@
  *
  *  @return void
  */
+@property(nonatomic, weak)id<ASByrBoardResponseDelegate> responseDelegate;
+
 - (instancetype)initWithAccessToken:(NSString *)token;
+
+
+- (void)fetchBoardWithReformer:(id<ASByrBoardResponseReformer>)reformer boardName:(NSString *)name;
 
 - (void)fetchRootSectionsWithSuccessBlock:(ASSuccessCallback)success
                              failureBlock:(ASSuccessCallback)failure;
@@ -26,14 +47,14 @@
                     successBlock:(ASSuccessCallback)success
                     failureBlock:(ASSuccessCallback)failure;
 
-- (void)fetchBoardInfoWithName:(NSString*)name
-                  successBlock:(ASSuccessCallback)success
-                  failureBlock:(ASSuccessCallback)failure;
+- (void)fetchBoardDetailInfoWithName:(NSString*)name
+                        successBlock:(ASSuccessCallback)success
+                        failureBlock:(ASSuccessCallback)failure;
 
-- (void)fetchBoardInfoWithName:(NSString*)name
-                          page:(NSInteger)page
-                  successBlock:(ASSuccessCallback)success
-                  failureBlock:(ASSuccessCallback)failure;
+- (void)fetchBoardOtherInfoWithName:(NSString*)name
+                              page:(NSInteger)page
+                      successBlock:(ASSuccessCallback)success
+                      failureBlock:(ASSuccessCallback)failure;
 
 - (void)fetchBoardInfoWithName:(NSString*)name
                           mode:(NSInteger)mode
