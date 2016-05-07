@@ -16,7 +16,7 @@
     return self;
 }
 
-- (void)fetchBoardWithReformer:(id<ASByrBoardResponseReformer>)reformer boardName:(NSString *)name{
+- (void)fetchBoardWithReformer:(id<ASByrBoardResponseReformer>)reformer boardName:(NSString *)name pageNumber:(NSInteger)page{
     void (^callback)(NSInteger, id) = ^(NSInteger statusCode, id response) {
         ASByrResponse *byrResponse = [[ASByrResponse alloc] init];
         byrResponse.statusCode = statusCode;
@@ -26,7 +26,7 @@
         }
         [self.responseDelegate fetchBoardResponse:byrResponse];
     };
-    [self fetchBoardDetailInfoWithName:name successBlock:callback failureBlock:^(NSInteger statusCode, id response) {
+    [self fetchBoardDetailInfoWithName:name page:page successBlock:callback failureBlock:^(NSInteger statusCode, id response) {
         NSLog(@"fetch board info fail!");
     }];
 }
@@ -44,17 +44,19 @@
     [self sendRequestWithUrl:BYR_SECTION_URL method:HTTP_GET parameters:nil success:success failure:failure];
 }
 
-- (void)fetchBoardDetailInfoWithName:(NSString *)name
+//按发表顺序读取文章列表
+- (void)fetchBoardPostLineInfoWithName:(NSString *)name
                         successBlock:(ASSuccessCallback)success
                         failureBlock:(ASSuccessCallback)failure {
-    [self fetchBoardInfoWithName:name mode:2 count:30 page:1 successBlock:success failureBlock:failure];
+    [self fetchBoardInfoWithName:name mode:6 count:30 page:1 successBlock:success failureBlock:failure];
 }
 
-- (void)fetchBoardOtherInfoWithName:(NSString *)name
+//按web顺序读取文章列表
+- (void)fetchBoardDetailInfoWithName:(NSString *)name
                               page:(NSInteger)page
                       successBlock:(ASSuccessCallback)success
                       failureBlock:(ASSuccessCallback)failure {
-    [self fetchBoardOtherInfoWithName:name page:page successBlock:success failureBlock:failure];
+    [self fetchBoardInfoWithName:name mode:2 count:30 page:page successBlock:success failureBlock:failure];
 }
 
 - (void)fetchBoardInfoWithName:(NSString *)name
