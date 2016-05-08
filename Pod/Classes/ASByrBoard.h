@@ -38,7 +38,7 @@
 - (instancetype)initWithAccessToken:(NSString *)token;
 
 
-- (void)fetchBoardWithReformer:(id<ASByrBoardResponseReformer>)reformer boardName:(NSString *)name;
+- (void)fetchBoardWithReformer:(id<ASByrBoardResponseReformer>)reformer boardName:(NSString *)name pageNumber:(NSInteger)page;
 
 - (void)fetchRootSectionsWithSuccessBlock:(ASSuccessCallback)success
                              failureBlock:(ASSuccessCallback)failure;
@@ -47,11 +47,11 @@
                     successBlock:(ASSuccessCallback)success
                     failureBlock:(ASSuccessCallback)failure;
 
-- (void)fetchBoardDetailInfoWithName:(NSString*)name
+- (void)fetchBoardPostLineInfoWithName:(NSString*)name
                         successBlock:(ASSuccessCallback)success
                         failureBlock:(ASSuccessCallback)failure;
 
-- (void)fetchBoardOtherInfoWithName:(NSString*)name
+- (void)fetchBoardDetailInfoWithName:(NSString*)name
                               page:(NSInteger)page
                       successBlock:(ASSuccessCallback)success
                       failureBlock:(ASSuccessCallback)failure;
