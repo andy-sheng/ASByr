@@ -16,6 +16,22 @@
     return self;
 }
 
+- (void)fetchUserInfoWithReformer:(id<ASByrUserResponseReformer>)reformer{
+    void (^callbackback)(NSInteger, id) = ^(NSInteger statusCode, id response) {
+        ASByrResponse * byrResponse = [[ASByrResponse alloc] init];
+        byrResponse.statusCode = statusCode;
+        byrResponse.response = response;
+        if (reformer) {
+            byrResponse = [reformer reformUserResponse:byrResponse];
+        }
+        [self.responseDelegate fetchUserResponse:byrResponse];
+    };
+    [self fetchUserInfoWithSuccessBlock:callbackback failureBlock:^(NSInteger statusCode, id response) {
+        NSLog(@"fetch user info fail!");
+    }];
+}
+
+//获取用户详细附属的信息
 - (void)fetchUserInfoWithSuccessBlock:(ASSuccessCallback)success
                          failureBlock:(ASSuccessCallback)failure {
     [self sendRequestWithUrl:[NSString stringWithFormat:@"%@/getinfo", BYR_USER_URL] method:HTTP_GET parameters:nil success:success failure:failure];

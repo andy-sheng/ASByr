@@ -8,9 +8,24 @@
 
 #import "ASByrBase.h"
 
+@protocol ASByrUserResponseDelegate <NSObject>
+
+-(void)fetchUserResponse:(ASByrResponse*)response;
+
+@end
+
+@protocol  ASByrUserResponseReformer<NSObject>
+
+-(ASByrResponse*)reformUserResponse:(ASByrResponse*)response;
+
+@end
+
 @interface ASByrUser : ASByrBase
+@property (strong, nonatomic) id<ASByrUserResponseDelegate> responseDelegate;
 
 - (instancetype)initWithAccessToken:(NSString *)token;
+
+- (void)fetchUserInfoWithReformer:(id<ASByrUserResponseReformer>)reformer;
 
 - (void)fetchUserInfoWithSuccessBlock:(ASSuccessCallback)success
                          failureBlock:(ASSuccessCallback)failure;
