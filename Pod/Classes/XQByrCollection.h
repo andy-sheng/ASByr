@@ -15,13 +15,13 @@
 
 @property (nonatomic, copy) NSString *title;
 
-@property (nonatomic, assign) NSInteger createdTime;
+@property (nonatomic, assign) NSString* createdTime;
 
-@property (nonatomic, assign) NSInteger postTime;
+@property (nonatomic, assign) NSString* postTime;
 
-@property (nonatomic, assign) NSInteger num;
+@property (nonatomic, assign) NSString* num;
 
-@property (nonatomic, assign) NSInteger gid;
+@property (nonatomic, assign) NSString* gid;
 
 @property (nonatomic, copy) NSString *bname;
 
