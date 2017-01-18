@@ -11,18 +11,16 @@
 @protocol ASByrCollectionResponseDelegate <NSObject>
 
 @optional
-- (void)fentchCollectionsResponse:(ASByrResponse *)response;
 
-- (void)addCollectionResponse:(ASByrResponse *)response;
+- (void)fentchCollectionsResponse:(ASByrResponse *)response;
 
 @end
 
 @protocol ASByrCollectionResponseReformer <NSObject>
 
 @optional
-- (ASByrResponse *)reformCollectionResponse:(ASByrResponse *)response;
 
-- (ASByrResponse *)reformAddCollectionResponse:(ASByrResponse *)response;
+- (ASByrResponse *)reformCollectionResponse:(ASByrResponse *)response;
 
 @end
 
