@@ -8,7 +8,27 @@
 
 #import "ASByrBase.h"
 
+@protocol ASByrCollectionResponseDelegate <NSObject>
+
+@optional
+
+- (void)fentchCollectionsResponse:(ASByrResponse *)response;
+
+@end
+
+@protocol ASByrCollectionResponseReformer <NSObject>
+
+@optional
+
+- (ASByrResponse *)reformCollectionResponse:(ASByrResponse *)response;
+
+@end
+
 @interface ASByrCollection : ASByrBase
+
+@property(nonatomic, weak)id<ASByrCollectionResponseDelegate> responseDelegate;
+@property(nonatomic, weak)id<ASByrCollectionResponseReformer> responseReformer;
+
 
 - (instancetype)initWithAccessToken:(NSString *)token;
 
@@ -16,9 +36,7 @@
                             failureBlock:(ASSuccessCallback)failure;
 
 - (void)fetchCollectionsWithCount:(NSInteger)count
-                             page:(NSInteger)page
-                     successBlock:(ASSuccessCallback)success
-                     failureBlock:(ASSuccessCallback)failure;
+                             page:(NSInteger)page;
 
 - (void)addCollectionWithBoard:(NSString*)board
                            aid:(NSString*)aid

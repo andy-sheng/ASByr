@@ -83,6 +83,7 @@
         ASByrResponse *byrResponse = [[ASByrResponse alloc] init];
         byrResponse.statusCode = response.statusCode;
         byrResponse.response   = responseObject;
+        byrResponse.isSucceeded = YES;
         if (reformer) {
             byrResponse = [reformer performSelector:reformFunc withObject:byrResponse];
         }
@@ -93,6 +94,8 @@
         NSDictionary *json  = nil;
         if ([error.userInfo valueForKey:AFNetworkingOperationFailingURLResponseDataErrorKey] != nil) {
             json = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:kNilOptions  error:nil];
+        }else{//无网络时
+            json = [NSDictionary dictionaryWithObjectsAndKeys:error.userInfo[NSLocalizedDescriptionKey],@"msg",error.userInfo[NSURLErrorFailingURLErrorKey],@"request",nil];
         }
         NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
         ASByrResponse *byrResponse = [[ASByrResponse alloc] init];

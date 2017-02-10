@@ -57,6 +57,9 @@
 
 @property (nonatomic, assign) BOOL is_subject;
 
+//存在于/threads/:name/:id
+@property (nonatomic, strong) NSArray<XQByrArticle *> *article;
+
 //下面几项只存在于/board/:name，/threads/:board/:id和/search/threads中
 @property (nonatomic, assign) NSInteger reply_count;
 

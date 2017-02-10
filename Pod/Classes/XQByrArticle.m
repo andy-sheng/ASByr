@@ -15,4 +15,8 @@
 + (NSDictionary *)modelCustomPropertyMapper {
     return @{@"aid" : @"id"};
 }
+
++ (NSDictionary *)objectClassInArray{
+    return @{@"article" : [XQByrArticle class]};
+}
 @end

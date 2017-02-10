@@ -13,18 +13,18 @@
 
 - (instancetype)initWithAccessToken:(NSString *)token {
     self = [super initWithAccessToken:token];
+    self.responseDelegate = nil;
+    self.responseReformer = nil;
     return self;
 }
 
 - (void)fetchCollectionsWithSuccessBlock:(ASSuccessCallback)success
                             failureBlock:(ASSuccessCallback)failure {
-    [self fetchCollectionsWithCount:30 page:1 successBlock:success failureBlock:failure];
+    [self fetchCollectionsWithCount:30 page:1];
 }
 
 - (void)fetchCollectionsWithCount:(NSInteger)count
-                             page:(NSInteger)page
-                     successBlock:(ASSuccessCallback)success
-                     failureBlock:(ASSuccessCallback)failure {
+                             page:(NSInteger)page{
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
     if (count > 0) {
@@ -33,7 +33,7 @@
     if (page > 0) {
         [parameters setObject:[@(page) stringValue] forKey:@"page"];
     }
-    [self sendRequestWithUrl:BYR_COLLECTION_URL method:HTTP_GET parameters:parameters success:success failure:failure];
+    [self sendRequestWithUrl:BYR_COLLECTION_URL method:HTTP_GET parameters:parameters delegate:self.responseDelegate callback:@selector(fentchCollectionsResponse:) reformer:self.responseReformer reformFunc:@selector(reformCollectionResponse:)];
 }
 
 - (void)addCollectionWithBoard:(NSString *)board
