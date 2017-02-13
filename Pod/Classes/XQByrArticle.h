@@ -67,4 +67,6 @@
 
 @property (nonatomic, assign) NSInteger last_reply_time;
 
+@property (nonatomic, assign) NSInteger id_count;
+
 @end
