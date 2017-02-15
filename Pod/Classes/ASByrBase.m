@@ -8,8 +8,19 @@
 
 #import "ASByrBase.h"
 #import "ASByrConfig.h"
-#import "AFNetworking.h"
 
+@implementation XQSessionManager
+
++ (XQSessionManager *)sharedHttpSessionManager{
+    static XQSessionManager * sessionManager;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sessionManager = [[AFHTTPSessionManager alloc]initWithBaseURL:[NSURL URLWithString:BYR_BASE_URL]];
+    });
+    return sessionManager;
+}
+
+@end
 @interface ASByrBase()
 
 @property(strong, nonatomic) NSString *accessToken;
@@ -27,8 +38,6 @@
     return self;
 }
 
-
-
 - (void)sendRequestWithUrl:(NSString *)urlStr
                     method:(NSString *)method
                     parameters:(id) parameters
@@ -38,7 +47,8 @@
     NSMutableDictionary *params = parameters ? [NSMutableDictionary dictionaryWithDictionary:parameters] : [NSMutableDictionary dictionary];
     [params setObject:self.accessToken forKey:@"oauth_token"];
     
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BYR_BASE_URL]];
+    XQSessionManager * manager = [XQSessionManager sharedHttpSessionManager];
+    //AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BYR_BASE_URL]];
     if ([method  isEqual: HTTP_GET]) {
         
         [manager GET:[NSString stringWithFormat:@"%@%@", urlStr, RETURN_FORMAT] parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -110,7 +120,9 @@
     NSMutableDictionary *params = parameters ? [NSMutableDictionary dictionaryWithDictionary:parameters] : [NSMutableDictionary dictionary];
     [params setObject:self.accessToken forKey:@"oauth_token"];
     
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BYR_BASE_URL]];
+    XQSessionManager * manager = [XQSessionManager sharedHttpSessionManager];
+
+    //AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BYR_BASE_URL]];
     if ([method  isEqual: HTTP_GET]) {
         [manager GET:[NSString stringWithFormat:@"%@%@", urlStr, RETURN_FORMAT]
           parameters:params
