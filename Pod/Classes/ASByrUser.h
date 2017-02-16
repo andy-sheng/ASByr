@@ -21,7 +21,7 @@
 @end
 
 @interface ASByrUser : ASByrBase
-@property (strong, nonatomic) id<ASByrUserResponseDelegate> responseDelegate;
+@property (weak, nonatomic) id<ASByrUserResponseDelegate> responseDelegate;
 
 - (instancetype)initWithAccessToken:(NSString *)token;
 
