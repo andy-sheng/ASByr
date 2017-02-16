@@ -35,10 +35,12 @@
  */
 @property(nonatomic, weak)id<ASByrBoardResponseDelegate> responseDelegate;
 
+@property(nonatomic, weak)id<ASByrBoardResponseReformer> responseReformer;
+
 - (instancetype)initWithAccessToken:(NSString *)token;
 
 
-- (void)fetchBoardWithReformer:(id<ASByrBoardResponseReformer>)reformer boardName:(NSString *)name pageNumber:(NSInteger)page;
+- (void)fetchBoard:(NSString *)name pageNumber:(NSInteger)page;
 
 - (void)fetchRootSectionsWithSuccessBlock:(ASSuccessCallback)success
                              failureBlock:(ASSuccessCallback)failure;

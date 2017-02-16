@@ -10,6 +10,7 @@
 
 #import "ASByrToken.h"
 #import "ASByrResponse.h"
+#import "AFNetworking.h"
 
 typedef void (^ASSuccessCallback)(NSInteger statusCode, id response);
 typedef void (^ASFailureCallback)(NSInteger statusCode, id response);
@@ -35,4 +36,10 @@ typedef void (^ASFailureCallback)(NSInteger statusCode, id response);
                   callback:(SEL) callback
                   reformer:(id) reformer
                 reformFunc:(SEL) reformFunc;
+@end
+
+@interface XQSessionManager : AFHTTPSessionManager
+
++ (XQSessionManager *)sharedHttpSessionManager;
+
 @end

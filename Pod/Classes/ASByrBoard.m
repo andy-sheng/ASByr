@@ -16,19 +16,18 @@
     return self;
 }
 
-- (void)fetchBoardWithReformer:(id<ASByrBoardResponseReformer>)reformer boardName:(NSString *)name pageNumber:(NSInteger)page{
-    void (^callback)(NSInteger, id) = ^(NSInteger statusCode, id response) {
-        ASByrResponse *byrResponse = [[ASByrResponse alloc] init];
-        byrResponse.statusCode = statusCode;
-        byrResponse.response   = response;
-        if (reformer) {
-            byrResponse = [reformer reformBoardResponse:byrResponse];
-        }
-        [self.responseDelegate fetchBoardResponse:byrResponse];
-    };
-    [self fetchBoardDetailInfoWithName:name page:page successBlock:callback failureBlock:^(NSInteger statusCode, id response) {
-        NSLog(@"fetch board info fail!");
-    }];
+- (void)fetchBoard:(NSString *)name pageNumber:(NSInteger)page{
+    
+    NSMutableDictionary *paramters = [NSMutableDictionary dictionary];
+    
+    [paramters setObject:page?[@(page) stringValue]:@"1" forKey:@"page"];
+    [self sendRequestWithUrl:[NSString stringWithFormat:@"%@/%@", BYR_BOARD_URL, name]                method:HTTP_GET
+                  parameters:paramters
+                    delegate:self.responseDelegate
+                    callback:@selector(fetchBoardResponse:)
+                    reformer:self.responseReformer
+                  reformFunc:@selector(reformBoardResponse:)];
+
 }
 
 - (void)fetchSectionInfoWithName:(NSString *)name
