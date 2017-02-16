@@ -16,6 +16,17 @@
     return self;
 }
 
+
+- (void)fetchTop10{
+    [self sendRequestWithUrl:[NSString stringWithFormat:@"%@/topten", BYR_WIDGET_URL]
+                      method:HTTP_GET
+                  parameters:nil
+                    delegate:self.responseDelegate
+                    callback:@selector(fetchTop10Response:)
+                    reformer:self.responseReformer
+                  reformFunc:@selector(reformTop10Response:)];
+}
+
 - (void)fetchTop10WithReformer:(id<ASByrWidgetResponseReformer>)reformer {
     void (^callback)(NSInteger, id) = ^(NSInteger statusCode, id response) {
         ASByrResponse *byrResponse = [[ASByrResponse alloc] init];

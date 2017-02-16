@@ -37,9 +37,11 @@
 
 @property(nonatomic, weak)id<ASByrWidgetResponseDelegate> responseDelegate;
 
+@property(nonatomic, weak)id<ASByrWidgetResponseReformer> responseReformer;
+
 - (instancetype)initWithAccessToken:(NSString *)token;
 
-- (void)fetchTop10WithReformer:(id<ASByrWidgetResponseReformer>) reformer;
+- (void)fetchTop10;
 
 - (void)fetchTop10WithSuccessBlock:(ASSuccessCallback)success
                       failureBlock:(ASSuccessCallback)failure;
