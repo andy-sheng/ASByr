@@ -14,4 +14,7 @@
 + (NSDictionary *)objectClassInArray{
     return @{@"file" : [XQByrFile class]};
 }
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    return @{@"file" : [XQByrFile class]};
+}
 @end
