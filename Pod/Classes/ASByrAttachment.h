@@ -9,6 +9,8 @@
 #import "ASByrBase.h"
 #import "ASByrConfig.h"
 
+@class XQByrAttachment;
+
 @interface ASByrAttachment : ASByrBase
 
 - (ASByrAttachment*)initWithAccessToken:(NSString*)token;
@@ -24,13 +26,13 @@
 
 #warning todo
 - (void)addAttachmentWithBoard:(NSString*)board
-                          file:(NSString*)file
+                          file:(NSURL*)file
                   successBlock:(ASSuccessCallback)success
                   failureBlock:(ASSuccessCallback)failure;
 
 - (void)addAttachmentWithBoard:(NSString*)board
                            aid:(NSInteger)aid
-                          file:(NSString*)file
+                          file:(NSURL*)file
                   successBlock:(ASSuccessCallback)success
                   failureBlock:(ASSuccessCallback)failure;
 

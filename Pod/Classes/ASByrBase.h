@@ -17,6 +17,8 @@ typedef void (^ASFailureCallback)(NSInteger statusCode, id response);
 
 @interface ASByrBase : NSObject
 
+@property(strong, nonatomic) NSString *accessToken;
+
 - (instancetype)initWithAccessToken:(NSString*)accessToken;
 
 - (ASByrResponse*)sendRequestWithUrl:(NSString *) urlStr

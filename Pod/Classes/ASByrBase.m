@@ -23,7 +23,6 @@
 @end
 @interface ASByrBase()
 
-@property(strong, nonatomic) NSString *accessToken;
 
 @end
 
@@ -53,7 +52,11 @@
         
         [manager GET:[NSString stringWithFormat:@"%@%@", urlStr, RETURN_FORMAT] parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
-            successCallback(response.statusCode, responseObject);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (failureCallback) {
+                    successCallback(response.statusCode, responseObject);
+                }
+            });
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
             NSDictionary *json  = nil;
@@ -62,20 +65,32 @@
             }
             
             NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
-            failureCallback(response.statusCode, json);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (failureCallback) {
+                    failureCallback(response.statusCode, json);
+                }
+            });
         }];
     } else {
         
         [manager POST:[NSString stringWithFormat:@"%@%@", urlStr, RETURN_FORMAT] parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
-            successCallback(response.statusCode, responseObject);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (failureCallback) {
+                    successCallback(response.statusCode, responseObject);
+                }
+            });
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSDictionary *json  = nil;
             if ([error.userInfo valueForKey:AFNetworkingOperationFailingURLResponseDataErrorKey] != nil) {
                 json = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:kNilOptions  error:nil];
             }
             NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
-            failureCallback(response.statusCode, json);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (failureCallback) {
+                    failureCallback(response.statusCode, json);
+                }
+            });
         }];
     }
     
