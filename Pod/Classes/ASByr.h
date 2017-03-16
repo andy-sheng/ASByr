@@ -9,5 +9,6 @@
 #ifndef ASByr_h
 #define ASByr_h
 
+#import "XQByrModels.h"
 
 #endif /* ASByr_h */

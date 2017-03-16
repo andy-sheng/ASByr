@@ -53,7 +53,7 @@
         [manager GET:[NSString stringWithFormat:@"%@%@", urlStr, RETURN_FORMAT] parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (failureCallback) {
+                if (successCallback) {
                     successCallback(response.statusCode, responseObject);
                 }
             });
@@ -76,7 +76,7 @@
         [manager POST:[NSString stringWithFormat:@"%@%@", urlStr, RETURN_FORMAT] parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (failureCallback) {
+                if (successCallback) {
                     successCallback(response.statusCode, responseObject);
                 }
             });
