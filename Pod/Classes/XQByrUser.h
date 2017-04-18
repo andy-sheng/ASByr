@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface XQByrUser : NSObject
+@interface XQByrUser : NSObject<NSCopying>
 
 @property (nonatomic, copy) NSString *home_page;
 

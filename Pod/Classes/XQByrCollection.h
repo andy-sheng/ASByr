@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class XQByrUser;
-@interface XQByrCollection : NSObject
+@interface XQByrCollection : NSObject<NSCopying>
 
 @property (nonatomic, strong) XQByrUser *user;
 
@@ -26,7 +26,7 @@
 @property (nonatomic, copy) NSString *bname;
 
 //为和数据库同步增加的字段
-@property (nonatomic, copy) NSString * fristImageUrl;
+@property (nonatomic, copy) NSString * firstImageUrl;
 
 @property (nonatomic, assign) NSInteger replyCount;
 

@@ -18,9 +18,13 @@
     return self;
 }
 
-- (void)fetchCollectionsWithSuccessBlock:(ASSuccessCallback)success
+- (void)fetchCollectionsWithCount:(NSInteger)count page:(NSInteger)page SuccessBlock:(ASSuccessCallback)success
                             failureBlock:(ASSuccessCallback)failure {
-    [self fetchCollectionsWithCount:30 page:1];
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    [parameters setObject:[@(count) stringValue] forKey:@"count"];
+    [parameters setObject:[@(page) stringValue] forKey:@"page"];
+    [self sendRequestWithUrl:BYR_COLLECTION_URL method:HTTP_GET parameters:parameters success:success failure:failure];
+    //[self fetchCollectionsWithCount:30 page:1];
 }
 
 - (void)fetchCollectionsWithCount:(NSInteger)count
