@@ -32,8 +32,8 @@
 
 - (instancetype)initWithAccessToken:(NSString *)token;
 
-- (void)fetchCollectionsWithSuccessBlock:(ASSuccessCallback)success
-                            failureBlock:(ASSuccessCallback)failure;
+- (void)fetchCollectionsWithCount:(NSInteger)count page:(NSInteger)page SuccessBlock:(ASSuccessCallback)success
+                     failureBlock:(ASSuccessCallback)failure;
 
 - (void)fetchCollectionsWithCount:(NSInteger)count
                              page:(NSInteger)page;
