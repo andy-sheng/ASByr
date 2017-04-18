@@ -23,4 +23,7 @@
     return [NSString stringWithFormat:@"%@?oauth_token=%@", _url, [ASByrToken shareInstance].accessToken];
 }
 
+- (NSString *)staticUrl{
+    return _url;
+}
 @end
